@@ -1,3 +1,5 @@
+#!/bin/bash
+
 curl -X PUT -i http://localhost:3000/profiles/sd89jsdf \
 	-H "Content-Type: application/json" \
 	-d '{
