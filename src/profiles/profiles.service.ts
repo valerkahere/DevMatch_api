@@ -28,12 +28,7 @@ export class ProfilesService {
   }
 
   findOne(id: string) {
-    this.profiles.forEach((p) => {
-      // if a given id matches any existing profiles IDs
-      if (id === p.id) {
-        this.profile = p;
-      }
-    });
-    return this.profile;
+    // if a given id matches any existing profiles IDs
+    return this.profiles.find((p) => p.id === id);
   }
 }
