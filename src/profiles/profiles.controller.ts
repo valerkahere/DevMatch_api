@@ -1,45 +1,55 @@
-import { Controller, Get, Param, Body, Post, Put, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post, Put, Delete, HttpCode, HttpStatus, Inject } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
+
+import { ProfilesService } from './profiles.service';
+
+
 @Controller('profiles')
 export class ProfilesController {
-  // GET /profiles
-  @Get()
-  findAll() {
-    return [];
-  }
 
-  // GET /profiles/:id
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return { id };
-  }
+    // add service
+    constructor(private profilesService: ProfilesService) {
 
-  // POST /profiles
-  @Post()
-  create(@Body() createProfileDto: CreateProfileDto) {
-    return createProfileDto;
-  }
+    }
 
-  // PUT /profiles/:id
-  @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateProfileDto: UpdateProfileDto
-  ) {
-    return {
-      id,
-      ...updateProfileDto
-    };
-  }
+    // GET /profiles
+    @Get()
+    findAll() {
+        return this.profilesService.findAll();
+    }
 
-  // DELETE /profiles/:id
-  @Delete(':id')
-  /* 
-  Challenge:
-    1. Change HttpStatus.OK to use the proper property on HttpStatus that serves back a status code of 204 back to the client
-  */
-  @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {}
+    // GET /profiles/:id
+    @Get(':id')
+    findOne(@Param('id') id: string) {
+        return { id };
+    }
+
+    // POST /profiles
+    @Post()
+    create(@Body() createProfileDto: CreateProfileDto) {
+        return createProfileDto;
+    }
+
+    // PUT /profiles/:id
+    @Put(':id')
+    update(
+        @Param('id') id: string,
+        @Body() updateProfileDto: UpdateProfileDto
+    ) {
+        return {
+            id,
+            ...updateProfileDto
+        };
+    }
+
+    // DELETE /profiles/:id
+    @Delete(':id')
+    /* 
+    Challenge:
+      1. Change HttpStatus.OK to use the proper property on HttpStatus that serves back a status code of 204 back to the client
+    */
+    @HttpCode(HttpStatus.NO_CONTENT)
+    remove(@Param('id') id: string) { }
 }
