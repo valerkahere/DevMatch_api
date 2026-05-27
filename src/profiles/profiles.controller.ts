@@ -23,7 +23,12 @@ export class ProfilesController {
     // GET /profiles/:id
     @Get(':id')
     findOne(@Param('id') id: string) {
-        return { id };
+        /*
+        Challenge:
+          1. Create the service method in the 'profiles.service.ts' file. It should take an ID and return a profile object.
+          2. Change the controller method we set up for getting single profiles to call our newly created service method and return the result from that.
+        */
+        return this.profilesService.findOne(id);
     }
 
     // POST /profiles
