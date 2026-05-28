@@ -38,8 +38,22 @@ export class ProfilesController {
 
   // POST /profiles
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() createProfileDto: CreateProfileDto) {
-    return createProfileDto;
+    /*
+    Challenge:
+      1. Create a new `create` function in the service file. It'll take the body of the post request as a parameter, which will be the body that we’re getting in the controller.
+      2. It needs to create a new profile and add it to the `profiles` array.
+      3. Each profile has an `id`, `name`, and `description`.
+      4. Remember, the backend is where you’ll typically create IDs for new resources, not the client. You’ll notice that in the original array, we’re creating unique IDs. We’ll need to create a new unique id for our new profile. Notice how we’re using `randomUUID()` to do that.
+      5. We’ll also want to return the new profile we’ve created to the controller, and have that return it as a response to the client.
+      6. You should receive a response from your Nest app with the unique `id`, `name`, and `description` if you’ve done this successfully. It'll have a status code of 201 and have the same response body as when we tried to retrieve a single profile.
+
+    Testing:
+      1. Call the bash script with `bash post.sh` in the terminal to create a new profile. Feel free to change the name and description in the file to whatever you please.
+      2. After you get the response from the POST request, go ahead and double check that it exists by making a GET request of the profile now that you have the ID. You can just make the GET request the same way we did before - just type out the URL with the id to get your newly created profile.
+    */
+    return this.profilesService.createOne(createProfileDto);
   }
 
   // PUT /profiles/:id
