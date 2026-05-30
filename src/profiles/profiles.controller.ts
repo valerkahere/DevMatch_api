@@ -78,6 +78,13 @@ export class ProfilesController {
     */
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
-    return id;
+    /*
+    Challenge:
+      1. Create a method in the service file to handle the delete request.
+      2. It should take an id and delete the profile that matches that id. If there is no match, don't do anything with the profiles array.
+      3. Regardless of whether or not it finds a match, don't worry about returning anything in the service method. In a later lesson, we'll handle the case where there's no match.
+      4. Our controller is already properly responding with a 204 and an empty body, so you just need to call the service method in the controller.
+    */
+    return this.profilesService.deleteOne(id);
   }
 }

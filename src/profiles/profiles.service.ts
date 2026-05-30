@@ -73,4 +73,13 @@ export class ProfilesService {
 
     return updatedProfile;
   }
+
+  deleteOne(id: string): void {
+    const indexOf: number = this.profiles.findIndex((p) => p.id === id);
+
+    if (indexOf !== -1) {
+      // only splice array when item is found
+      this.profiles.splice(indexOf, 1); // 2nd parameter means remove one item only
+    }
+  }
 }
