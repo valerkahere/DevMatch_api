@@ -1,10 +1,12 @@
 import { Body, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { CreateProfileDto } from './dto/create-profile.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { Profile } from './profiles.interface';
 
 @Injectable()
 export class ProfilesService {
-  private profiles = [
+  private profiles: Profile[] = [
     {
       id: randomUUID(),
       name: 'Brianna Watts',
@@ -27,7 +29,7 @@ export class ProfilesService {
   }
 
   findOne(id: string) {
-    // if a given id matches any existing profiles IDs
+    // if a given id matches any existing profiles IDs - return this profile
     return this.profiles.find((p) => p.id === id);
   }
 
@@ -39,5 +41,36 @@ export class ProfilesService {
     };
     this.profiles.push(newProfile);
     return newProfile;
+  }
+
+  updateOne(id: string, body: UpdateProfileDto) {
+    // find if this profile exists
+    const foundProfile: Profile | undefined = this.profiles.find(
+      (p) => p.id === id,
+    );
+    // through index of so we track where it's in arra
+    // Returns the index of the first occurrence of a value in an array, or -1 if it is not present.
+    let indexOf: number = -1;
+    if (foundProfile) {
+      indexOf = this.profiles.indexOf(foundProfile);
+    }
+
+    // just return an empty object where there isn't a match
+    // use type assertions for Profile | {} case!
+    let updatedProfile = <Profile>{};
+
+    // if found index, update it
+    if (indexOf !== -1) {
+      updatedProfile = {
+        id: id,
+        name: body.name,
+        description: body.description,
+      };
+      // reassign through accessing by index directly
+      // use spread operator to assign values directly instead of reference
+      this.profiles[indexOf] = { ...updatedProfile };
+    }
+
+    return updatedProfile;
   }
 }

@@ -59,10 +59,15 @@ export class ProfilesController {
   // PUT /profiles/:id
   @Put(':id')
   update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
-    return {
-      id,
-      ...updateProfileDto,
-    };
+    /*
+    Challenge:
+      1. Add an `update` method in the service layer. It should take an `id` and the updated profile object we get from the body. That object will contain a `name` and `description`.
+      2. It should find the matching profile based on the id.
+      3. It should update that profile in the profiles array.
+      4. It should return the updated profile.
+      5. Then, call that function in your PUT controller method and return the result.
+    */
+    return this.profilesService.updateOne(id, updateProfileDto);
   }
 
   // DELETE /profiles/:id
